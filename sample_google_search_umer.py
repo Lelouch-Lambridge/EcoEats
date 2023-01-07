@@ -18,6 +18,8 @@ while notten:
     for j in search(query, tld="com", num=numberoflinks, stop=numberoflinks, pause=2):
         if "www.youtube.com" in j:
             numberoflinks += 1
+        elif "www.tiktok.com" in j:
+            numberoflinks += 1
         elif len(listoflinks) == 10:
             notten = False
         else:
