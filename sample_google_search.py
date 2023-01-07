@@ -14,7 +14,7 @@ notten = True
 listrecipe = []
 
 while notten:
-    for i in search(query, tld="com", num=searchten, stop=None, pause=2):
+    for i in search(query, tld="com", num=searchten, stop=searchten, pause=2):
         if "www.youtube.com" in i:
             searchten += 1
         elif len(listrecipe) == 10:
