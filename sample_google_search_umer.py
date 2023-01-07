@@ -22,5 +22,5 @@ while notten:
             numberoflinks += 1
         elif len(listoflinks) == 10:
             notten = False
-        else:
+        elif j not in listoflinks:
             listoflinks.append(j)
