@@ -6,7 +6,7 @@ for x in data:
 
 for r,ing in recipies.items():
  check = 0
- for x in ing:
+ for x in r:
   if x in keywords: check += 1
  if check == len(keywords):results += r
 
