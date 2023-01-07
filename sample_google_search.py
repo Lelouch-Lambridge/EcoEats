@@ -6,4 +6,4 @@ except ImportError:
 query = "low fat burritos" # we would need to concatentate user key words here
  
 for j in search(query, tld="com", num=10, stop=10, pause=2):
-    print(j) #need to extract specific lengths
+    print(j) #need to extract specific links
