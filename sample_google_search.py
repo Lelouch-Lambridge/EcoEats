@@ -16,5 +16,5 @@ while len(url_list) <= 10:
             if len(url_list) >= 10:
                 break
 url_list.pop()
-print(url_list[0])
+print(url_list)
 
