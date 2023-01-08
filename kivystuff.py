@@ -2,7 +2,6 @@ from ingredient_parser import parse_ingredient
 from recipe_scrapers import scrape_me
 import requests
 from bs4 import BeautifulSoup
-from parse_ingredients import parse_ingredient
 from googlesearch import search
 from kivy.lang import Builder
 from kivy.properties import ObjectProperty
@@ -30,14 +29,12 @@ def carbonfooter(url):
             final_list_of_ingredients[i].replace('▢', '')
 
     # list which contains each separate ingredient
-    print(listofinformation := [parse_ingredient(i)
-          for i in (final_list_of_ingredients)])
-    unitdict = {'cups': 0.25, 'teaspoons': 0.005,
-                'tablespoons': 0.015, 'oz': 0.028, 'liters': 1, '': 1}
+    listofinformation = [parse_ingredient(i) for i in (final_list_of_ingredients)]
+    unitdict = {'cups': 0.25, 'teaspoons': 0.005, 'tablespoons': 0.015, 'oz': 0.028, 'liters': 1, '': 1}
     carbon = 0
+
     for x in listofinformation:
         query = x['name'].split()[-1]
-        print(query)
         if query in ['water', '']:
             continue
         url_list_foot = []
@@ -49,8 +46,6 @@ def carbonfooter(url):
         for j in search(query, tld="com", num=1, stop=1, pause=2):
             if 'apps.carboncloud.com':
                 url_list_foot.append(j)
-            print(j)
-        print(url_list_foot)
         url_foot = url_list_foot[0]
         page = requests.get(url)
         soup = BeautifulSoup(page.content, 'html.parser')
@@ -63,12 +58,11 @@ def carbonfooter(url):
             foot = float(elementofcarbonnumber[0].replace('kg CO2e/kg', ''))
         except:
             foot = 0
-
-        mod = unitdict[k] if (k := x['unit']) in unitdict.keys() else unitdict[j] if (
-            j := ''.join(k.split()[:-1])) in unitdict.keys() else 0
-
+        mod = unitdict[k] if (k := x['unit']) in unitdict.keys() else unitdict[j] if (j := ''.join(k.split()[:-1])) in unitdict.keys() else 0
+        print(float(x['unit']), mod, foot)
         carbon += float(x['quantity'])*mod*foot
-        return carbon
+        print(carbon)
+        return carbon if type(carbon) == float else 0.0
 
 # where google search function would go
 
@@ -84,32 +78,30 @@ def find(stuff):
     query = prompt + ' recipe'
 
     url_list = []
-
-    while len(url_list) < 2:
-        for j in search(query, tld="com", num=1, stop=1, pause=0):
-            if not ('youtube' in j or 'tiktok' in j or 'pintrest' in j or 'facebook' in j or '.gov' in j):
+    e = 0 
+    while len(url_list) < 4:
+        for j in search(query, tld="com", num=5, start = e, stop= e+5, pause=0):
+            if not ('youtube' in j or 'tiktok' in j or 'pintrest' in j or 'facebook' in j or '.gov' in j or 'delish' in j or 'foodnetwork' in j):
                 url_list.append(j)
     url_list.pop()
+    print(url_list)
     return url_list
 
 
 def see(stuff):
     out = []
     for n in (k := find(stuff)):
-        out += [(n, carbonfooter(n))]
+        out += [(k, carbonfooter(n))]
 
 
 class MyLayout(Widget):
     def press(self):
         words = self.ids.txt_in.text
-        tuplist = see(words)
-        #while len(tuplist) > 5: tuplist.pop()
+        print(tuplist := see(words))
+        
+        while len(tuplist) > 5: tuplist.pop()
         print(tuplist)
-
-        self.ids.re0.text = tuplist[0][0]
-        self.ids.c0.text = tuplist[1]
-
-        #for n in range(len(tuplist)): exec(f"self.ids.re{n}.text, self.ids.c{n}.text = tuplist[{n}]")
+        for n in range(len(tuplist)): exec(f"self.ids.re{n}.text, self.ids.c{n}.text = tuplist[{n}]")
         self.ids.txt_in.text = 'Enter word: '
         return words
 
