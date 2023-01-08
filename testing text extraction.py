@@ -1,4 +1,3 @@
-from parse_ingredients import parse_ingredient
 from bs4 import BeautifulSoup
 import requests
 from recipe_scrapers import scrape_me
