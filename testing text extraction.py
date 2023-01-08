@@ -57,12 +57,33 @@ listofinformation = []
 for i in range(0, len(final_list_of_ingredients)):
     listofinformation.append(parse_ingredient(final_list_of_ingredients[i]))
 
+ingredientednames = []
 for j in range(0, len(listofinformation)):
-    print(listofinformation[j]['name'])
+    ingredientednames.append(listofinformation[j]['name'])
 
 
 # to search
-query = "eggs"
+"""
+for i in range(0, len(ingredientednames)):
+    query = 'carbon cloud carbon footprint of ' + ingredientednames[i]
+    number_of_carbon_links = 0
+    not_carbonated = True
+    while not_carbonated:
+        for j in search(query, tld="com", num=number_of_carbon_links, stop=number_of_carbon_links, pause=2):
+            if "apps.carboncloud.com" not in j:
+                number_of_carbon_links += 1
+                time.sleep(2)
+            else:
+                print(j)
+                not_carbonated = False
+"""
+googleTrendsUrl = 'https://google.com'
+response = requests.get(googleTrendsUrl)
+if response.status_code == 200:
+    g_cookies = response.cookies.get_dict()
 
-for j in search(query, tld="com", num=10, stop=10, pause=2):
-    print(j)
+url = 'https://apps.carboncloud.com/climatehub/agricultural-reports/benchmarks/7859e28f-2971-4f86-836e-616f56eac8c2'
+page = requests.get(url)
+soup = BeautifulSoup(page.content, 'html.parser')
+x = soup.find_all('h2', class_='_c639719a')[0:2]
+in x[i]
