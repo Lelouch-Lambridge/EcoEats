@@ -11,7 +11,7 @@ from ingredient_parser import parse_ingredient
 import nltk
 import json
 from googlesearch import search
-
+import html2text
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import time
@@ -86,4 +86,7 @@ url = 'https://apps.carboncloud.com/climatehub/agricultural-reports/benchmarks/7
 page = requests.get(url)
 soup = BeautifulSoup(page.content, 'html.parser')
 x = soup.find_all('h2', class_='_c639719a')[0:2]
-in x[i]
+
+for points in x:
+    point = str(points.text)
+    print(point)
