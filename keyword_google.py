@@ -14,13 +14,14 @@ query = prompt + ' recipe'
 
 url_list = []
 
-while len(url_list) <= 3:
+while len(url_list) <= 10:
     for j in search(query, tld="com", num=20, stop=20, pause=0):
-        if 'allrecipe' in j:
+        if 'youtube' in j or 'tiktok' in j or 'pintrest' in j or 'facebook' in j or '.gov' in j:
+            pass
+        else:
             url_list.append(j)
-            if len(url_list) >= 3:
+            if len(url_list) >= 10:
                 break
 url_list.pop()
 for i in url_list:
     print(i)
-
