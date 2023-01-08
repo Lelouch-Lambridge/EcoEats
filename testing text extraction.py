@@ -1,4 +1,8 @@
 from recipe_scrapers import scrape_me
+from ingredient_parser import parse_ingredient
+import nltk
+
+nltk.download('averaged_perceptron_tagger')
 """
 # test file
 from urllib.request import urlopen
@@ -57,22 +61,23 @@ for i in range(0, len(listofingredients)):
 """
 
 
-# give the url as a string, it can be url from any site listed below
-scraper = scrape_me(
-    'https://www.allrecipes.com/recipe/158968/spinach-and-feta-turkey-burgers/')
-
 # Q: What if the recipe site I want to extract information from is not listed below?
 # A: You can give it a try with the wild_mode option! If there is Schema/Recipe available it will work just fine.
 scraper = scrape_me(
-    'https://joyfoodsunshine.com/the-most-amazing-chocolate-chip-cookies/', wild_mode=True)
+    'https://www.simplyrecipes.com/recipes/homemade_pizza/', wild_mode=True)
 
-scraper.title()
-scraper.total_time()
-scraper.yields()
-scraper.ingredients()
-# or alternatively for results as a Python list: scraper.instructions_list()
-scraper.instructions()
-scraper.image()
-scraper.host()
-scraper.links()
-print(scraper.ingredients())
+# list of ingredients obtained from scraping
+final_list_of_ingredients = scraper.ingredients()
+for i in range(0, len(final_list_of_ingredients)):
+    if '▢' in final_list_of_ingredients[i]:
+        final_list_of_ingredients[i].replace('▢', '')
+
+listofinformation = []
+
+# add all info to listofinformation
+for i in range(0, len(final_list_of_ingredients)):
+    listofinformation.append(parse_ingredient(final_list_of_ingredients[i]))
+
+for j in range(0, len(listofinformation)):
+    print(listofinformation[j])
+    print('\n')
