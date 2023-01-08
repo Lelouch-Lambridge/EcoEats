@@ -1,0 +1,42 @@
+<MyLayout>:
+    GridLayout:
+        col_force_default: False
+        col_default_width: 200
+        cols: 2
+        rows: 2
+        row_default_height: 60
+        spacing: [20,5]
+        padding: [0,0,0,600]
+
+        TextInput:
+            id: text_input
+            text: 'Enter Search Prompt: \n'
+            multiline: False
+            pos_hint_x: 100
+            pos_hint_y: 400
+            width: 500
+            on_text_validate: root.press()
+
+        Button:
+            id: button_text
+            font_size: 20
+            pos_hint_x: 700
+            pos_hint_y: 400
+            width: 30
+            color: [1,1,1,1]
+            text: "Run"
+            on_press: root.press() 
+        
+        Label:
+            id: recipe_text
+            font_size: 20
+            pos_hint_x: 100
+            pos_hint_y: 100
+            width: 500
+
+        Label:
+            id: carbon_text
+            font_size: 20
+            pos_hint_x: 700
+            pos_hint_y: 100
+            width: 30
