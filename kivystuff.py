@@ -20,17 +20,17 @@ def see(stuff):
   from googlesearch import search
  except ImportError:
   print(" 'google' not found")
-  prompt = str(' '.join(stuff.split()[2:]))
+ prompt = str(' '.join(stuff.split()[2:]))
  query = prompt + ' recipe'
 
  url_list = []
 
- while len(url_list) < 10:
-  for j in search(query, tld="com", num=20, stop=20, pause=0):
+ while len(url_list) < 2:
+  for j in search(query, tld="com", num=1, stop=1, pause=0):
    if not ('youtube' in j or 'tiktok' in j or 'pintrest' in j or 'facebook' in j or '.gov' in j):
     url_list.append(j)
  url_list.pop()
- return url_list.pop(), 0
+ return url_list, '0'
  
 
 class MyLayout(Widget):
@@ -40,8 +40,8 @@ class MyLayout(Widget):
   #while len(tuplist) > 5: tuplist.pop()
   print(tuplist)
   
-  #self.ids.re0.text = tuplist[0]
-  #self.ids.c0.text = tuplist[1]
+  self.ids.re0.text = tuplist[0][0]
+  self.ids.c0.text = tuplist[1]
 
   #for n in range(len(tuplist)): exec(f"self.ids.re{n}.text, self.ids.c{n}.text = tuplist[{n}]") 
   self.ids.txt_in.text = 'Enter word: '
