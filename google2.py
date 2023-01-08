@@ -67,7 +67,7 @@ for result in page.cssselect(".r a"):
     if url.startswith("/url?"):
         url = parse_qs(urlparse(url).query)['q']
     print(url[0])"""
-class Gsearch_python:
+class Gsearch_python:   #code starts here
    def __init__(self,name_search):
       self.name = name_search
    def Gsearch(self):
