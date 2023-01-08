@@ -17,66 +17,41 @@ from selenium.webdriver.common.keys import Keys
 import time
 
 
-# test file
+# stores url
+url = 'https://tasty.co/recipe/pizza-dough'
 
-
-"""
-for i in range(0, len(listofparagraphs)):
-    if len(listofparagraphs[i]) == 0:
-        print("")
-    elif listofparagraphs[i][0].isdigit() or ord(listofparagraphs[i][0]) > 127:
-        listofingredients.append(listofparagraphs[i])
-
-for i in range(0, len(listoflielements)):
-    if len(listoflielements[i]) == 0:
-        print("")
-    elif listoflielements[i][0].isdigit() or ord(listoflielements[i][0]) > 127:
-        listofingredients.append(listoflielements[i])
-
-for i in range(0, len(listofingredients)):
-    result = parse_ingredient(
-        listofingredients[i])
-    print(f"Found results: \n {result}")
-"""
-
-url = 'https://www.simplyrecipes.com/recipes/homemade_pizza/'
-# Q: What if the recipe site I want to extract information from is not listed below?
-# A: You can give it a try with the wild_mode option! If there is Schema/Recipe available it will work just fine.
+# scrapes ingredients
 scraper = scrape_me(
     url, wild_mode=True)
 
-
+# removes unicode character
 final_list_of_ingredients = scraper.ingredients()
 for i in range(0, len(final_list_of_ingredients)):
     if '▢' in final_list_of_ingredients[i]:
         final_list_of_ingredients[i].replace('▢', '')
 
+# list which contains each separate ingredient
 listofinformation = []
 
 # add all info to listofinformation
 for i in range(0, len(final_list_of_ingredients)):
     listofinformation.append(parse_ingredient(final_list_of_ingredients[i]))
+print(listofinformation)
 
 ingredientednames = []
 for j in range(0, len(listofinformation)):
     ingredientednames.append(listofinformation[j]['name'])
 
+quantitiesforeach_ingredient = []
+for k in range(0, len(listofinformation)):
+    quantitiesforeach_ingredient.append(listofinformation[k]['quantity'])
+
+unitforeach_ingredient = []
+for i in range(0, len(listofinformation)):
+    unitforeach_ingredient.append(listofinformation[i]['unit'])
+
 
 # to search
-"""
-for i in range(0, len(ingredientednames)):
-    query = 'carbon cloud carbon footprint of ' + ingredientednames[i]
-    number_of_carbon_links = 0
-    not_carbonated = True
-    while not_carbonated:
-        for j in search(query, tld="com", num=number_of_carbon_links, stop=number_of_carbon_links, pause=2):
-            if "apps.carboncloud.com" not in j:
-                number_of_carbon_links += 1
-                time.sleep(2)
-            else:
-                print(j)
-                not_carbonated = False
-"""
 googleTrendsUrl = 'https://google.com'
 response = requests.get(googleTrendsUrl)
 if response.status_code == 200:
