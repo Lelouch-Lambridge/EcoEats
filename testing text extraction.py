@@ -87,6 +87,11 @@ page = requests.get(url)
 soup = BeautifulSoup(page.content, 'html.parser')
 x = soup.find_all('h2', class_='_c639719a')[0:2]
 
+elementofcarbonnumber = []
 for points in x:
     point = str(points.text)
-    print(point)
+    elementofcarbonnumber.append(point)
+
+newcarbonvalues = []
+newcarbonvalues.append(elementofcarbonnumber[0].replace('kg CO2e/kg', ''))
+print(newcarbonvalues)
