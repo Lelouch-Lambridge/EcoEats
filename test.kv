@@ -1,0 +1,60 @@
+<MyLayout>:
+        TextInput:
+                id: text_input
+                text: 'Enter Search Prompt: \n'
+                multiline: False
+                font_size: 25
+                pos: 50, 450
+                width: 500
+                on_text_validate: root.press()
+
+        Button:
+                id: button_text
+                font_size: 25
+                pos: 600, 450
+                width: 150
+                color: [1,1,1,1]
+                text: "Run"
+                on_press: root.press() 
+        
+        TextInput:
+                id: re1
+                font_size: 25
+                pos: 75, 350
+                width: 450
+                height: 50
+
+        TextInput:
+                id: c1
+                font_size: 25
+                pos: 575, 350
+                width: 150
+                height: 50
+
+        TextInput:
+                id: re2
+                font_size: 25
+                pos: 75, 250
+                width: 450
+                height: 50
+
+        TextInput:
+                id: c2
+                font_size: 25
+                pos: 575, 250
+                width: 150
+                height: 50
+
+        TextInput:
+                id: re3
+                font_size: 25
+                pos: 75, 150
+                width: 450
+                height: 50
+
+        TextInput:
+                id: c3
+                font_size: 25
+                pos: 575, 150
+                width: 150
+                height: 50
