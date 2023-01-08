@@ -1,2 +1,3 @@
-# HackED-Project
+# EcoEats
 HackED Project
+by Crack Overflow

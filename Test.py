@@ -14,29 +14,21 @@ from kivy.lang import Builder
 
 Builder.load_file('test.kv')
 
-def see(stuff):
-    return ' '.join(stuff.split()[2:]), '0'
-
 class MyLayout(Widget):
     def press(self): 
-        for i in range(4):
+        for i in range(3):
             exec(f'self.ids.re{i}.text, self.ids.c{i}. text = (0,0)')
         prompt = self.ids.text_input.text.replace('Enter Search Prompt: ', '')
         self.ids.text_input.text = 'Enter Search Prompt: \n'
         url_list = search_url(prompt)
 
-        for i in range(4):
+        for i in range(2):
             exec(f'self.ids.re{i}.text, self.ids.c{i}. text = tuplist[{i}]')
         return prompt
 
 class ECoEat(App):
     def build(self):
         return MyLayout()
-
-# class Backend():  
-#     def __init__(self):
-#         url = search_url(self)
-#         print(url)
 
 
 if __name__ == '__main__':
