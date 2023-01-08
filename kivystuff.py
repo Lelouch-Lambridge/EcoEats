@@ -20,8 +20,10 @@ Builder.load_file('kivystuff.kv')
 
 def carbonfooter(url):
     # scrapes ingredients
-    scraper = scrape_me(url, wild_mode=True)
-
+    try:
+        scraper = scrape_me(url, wild_mode=True)
+    except:
+        return None
     # removes unicode character
     final_list_of_ingredients = scraper.ingredients()
     for i in range(0, len(final_list_of_ingredients)):
@@ -34,7 +36,7 @@ def carbonfooter(url):
     carbon = 0
 
     for x in listofinformation:
-        query = x['name'].split()[-1]
+        query = x['name']
         if query in ['water', '']:
             continue
         url_list_foot = []
@@ -57,9 +59,11 @@ def carbonfooter(url):
         try:
             foot = float(elementofcarbonnumber[0].replace('kg CO2e/kg', ''))
         except:
-            foot = 0
+            #preset if not in database
+            foot = 1
+
         mod = unitdict[k] if (k := x['unit']) in unitdict.keys() else unitdict[j] if (j := ''.join(k.split()[:-1])) in unitdict.keys() else 0
-        print(float(x['unit']), mod, foot)
+        print(float(x['quantity']), mod, foot)
         carbon += float(x['quantity'])*mod*foot
         print(carbon)
         return carbon if type(carbon) == float else 0.0
@@ -90,20 +94,19 @@ def find(stuff):
 
 def see(stuff):
     out = []
-    for n in (k := find(stuff)):
-        out += [(k, carbonfooter(n))]
+    for n in find(stuff):
+        if carbonfooter(n) !=  None:
+            out += [(n, str(carbonfooter(n)))]
+    return out
 
 
 class MyLayout(Widget):
     def press(self):
         words = self.ids.txt_in.text
-        print(tuplist := see(words))
-        
-        while len(tuplist) > 5: tuplist.pop()
-        print(tuplist)
+        print(f"sh:{(tuplist := see(words))}")
+        #while len(tuplist) > 5: tuplist.pop()
         for n in range(len(tuplist)): exec(f"self.ids.re{n}.text, self.ids.c{n}.text = tuplist[{n}]")
         self.ids.txt_in.text = 'Enter word: '
-        return words
 
 
 class MyApp(App):
