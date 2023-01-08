@@ -1,46 +1,25 @@
+from parse_ingredients import parse_ingredient
+import re
+from collections import OrderedDict
+from bs4 import BeautifulSoup
+import pandas as pd
+import requests
+import lxml
+from urllib.request import Request, urlopen
 from recipe_scrapers import scrape_me
 from ingredient_parser import parse_ingredient
 import nltk
+import json
+from googlesearch import search
 
-nltk.download('averaged_perceptron_tagger')
-"""
+from selenium import webdriver
+from selenium.webdriver.common.keys import Keys
+import time
+
+
 # test file
-from urllib.request import urlopen
-import requests
-import pandas as pd
-from bs4 import BeautifulSoup
-from collections import OrderedDict
-import re
-from parse_ingredients import parse_ingredient
 
 
-url_test = input
-
-
-def extractdata(url):
-    r = requests.get(url)
-    return r.text
-
-
-listofparagraphs = []
-listoflielements = []
-listofspans = []
-listofingredients = []
-
-htmldata = extractdata(
-    "https://www.theseasonedmom.com/easiest-burrito-recipe/")
-soup = BeautifulSoup(htmldata, 'html.parser')
-data = ''
-for data in soup.find_all():
-    listofparagraphs.append(data.get_text().replace('\n', '').strip())
-
-"""
-"""
-from recipe_scrapers import scrape_me
-datalist = soup.find('ul')
-for li in datalist.find_all("li"):
-    listoflielements.append(li.text.replace('\n', '').strip())
-"""
 """
 for i in range(0, len(listofparagraphs)):
     if len(listofparagraphs[i]) == 0:
@@ -60,13 +39,13 @@ for i in range(0, len(listofingredients)):
     print(f"Found results: \n {result}")
 """
 
-
+url = 'https://www.simplyrecipes.com/recipes/homemade_pizza/'
 # Q: What if the recipe site I want to extract information from is not listed below?
 # A: You can give it a try with the wild_mode option! If there is Schema/Recipe available it will work just fine.
 scraper = scrape_me(
-    'https://www.simplyrecipes.com/recipes/homemade_pizza/', wild_mode=True)
+    url, wild_mode=True)
 
-# list of ingredients obtained from scraping
+
 final_list_of_ingredients = scraper.ingredients()
 for i in range(0, len(final_list_of_ingredients)):
     if '▢' in final_list_of_ingredients[i]:
@@ -79,5 +58,11 @@ for i in range(0, len(final_list_of_ingredients)):
     listofinformation.append(parse_ingredient(final_list_of_ingredients[i]))
 
 for j in range(0, len(listofinformation)):
-    print(listofinformation[j])
-    print('\n')
+    print(listofinformation[j]['name'])
+
+
+# to search
+query = "eggs"
+
+for j in search(query, tld="com", num=10, stop=10, pause=2):
+    print(j)
